@@ -1,1 +1,59 @@
+//Calculadora de IMC:
+package mx.unam.fesa.ico;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Scanner;
+
+public class Main {
+    static void main() {
+
+        CalculadoraIMC calculadoraIMC = new CalculadoraIMC();
+
+
+        JFrame miVentana = new JFrame("Calculadora IMC");
+        miVentana.setSize(800, 600);
+        miVentana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        miVentana.setLayout(new FlowLayout());
+
+        JLabel lblPeso = new JLabel("Peso  en kilogramos: ");
+        JTextField txtPeso = new JTextField(10);
+        JLabel lblAltura = new JLabel("Altura en metros: ");
+        JTextField txtAltura = new JTextField(10);
+
+        JButton btnCalcular = new JButton("Calcular IMC");
+        JTextField txtResultado = new JTextField(20);
+        txtResultado.setEditable(false);
+
+        btnCalcular.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    double peso = Double.parseDouble(txtPeso.getText());
+                    double altura = Double.parseDouble(txtAltura.getText());
+
+                    calculadoraIMC.setPeso(peso);
+
+                    calculadoraIMC.setAltura(altura);
+
+                    calculadoraIMC.calcularIMC();
+
+                    txtResultado.setText("IMC: " + calculadoraIMC.getImc());
+                } catch (Exception ex) {
+                    txtResultado.setText("Error en los datos");
+                }
+            }
+        });
+
+        miVentana.add(lblPeso);
+        miVentana.add(txtPeso);
+        miVentana.add(lblAltura);
+        miVentana.add(txtAltura);
+        miVentana.add(btnCalcular);
+        miVentana.add(txtResultado);
+
+        miVentana.setVisible(true);
+    }
+}

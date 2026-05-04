@@ -1,1 +1,9 @@
+package mx.unam.fesa.ico.DemoSwing;
 
+public class MainSwing {
+
+    static void main(String[] args) {
+        VentanaSwing ventana = new VentanaSwing();
+    }
+
+}

@@ -1,9 +1,217 @@
+MainSwing.java
 package mx.unam.fesa.ico.DemoSwing;
 
 public class MainSwing {
 
     static void main(String[] args) {
         VentanaSwing ventana = new VentanaSwing();
+    }
+
+}
+
+
+
+
+
+VentanaSwing.java
+package mx.unam.fesa.ico.DemoSwing;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+public class VentanaSwing extends JFrame {
+    private JLabel etiqueta;
+    private JTextField entrada;
+    private JButton boton;
+
+
+    public VentanaSwing(){
+        super("Mi primer ventana Swing");
+        this.getContentPane().setLayout(new GridLayout(3,3));
+        etiqueta = new JLabel("Dame un número: ");
+        entrada = new JTextField(10);
+        boton = new JButton("Enviar");
+        boton.setForeground(new Color(104, 184, 237));
+        boton.setBackground(new Color(224, 42,42));
+        etiqueta.setForeground(new Color(224, 42, 42));
+        boton.setSize(100, 100);
+
+        getContentPane().add(etiqueta,0);
+        getContentPane().add(entrada, 1);
+        getContentPane().add(boton, 2);
+        getContentPane().repaint();
+        this.pack();
+
+        setSize(600, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+
+        boton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                double entradaCelcius = Double.parseDouble(entrada.getText());
+                double gradosFarenheit = (entradaCelcius * 9 / 5) + 32;
+                JOptionPane.showMessageDialog(null, "En Farenheit es: " + gradosFarenheit);
+            }
+        });
+
+        entrada.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("Hola desde el click a cuadro de dialógo");
+            }
+        });
+
+        entrada.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e){
+                System.out.println("Hola desde el KeyTyped al cuadro de entrada");
+                System.out.println(e.getKeyChar());
+                System.out.println("Código de tecla: " + e.getKeyCode());
+            }
+        });
+
+    }
+
+}
+
+
+
+
+
+MainVentana2.java
+package mx.unam.fesa.ico.Ventana2;
+
+public class MainVentana2 {
+
+    static void main(String[] args) {
+        VentanaDos ventana = new VentanaDos();
+    }
+}
+
+
+
+
+
+ModeloComboNombres.java
+package mx.unam.fesa.ico.Ventana2;
+
+import javax.swing.*;
+import javax.swing.event.ListDataListener;
+import java.util.ArrayList;
+
+public class ModeloComboNombres implements ComboBoxModel {
+    private ArrayList<String> nombres;
+    private String selectedItem;
+
+    public ModeloComboNombres(ArrayList<String> nombres){
+        this.nombres = nombres;
+    }
+
+    public ArrayList<String> getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(ArrayList<String> nombres) {
+        this.nombres = nombres;
+    }
+
+    @Override
+    public void setSelectedItem(Object anItem) {
+        selectedItem = (String) anItem;
+    }
+
+    @Override
+    public Object getSelectedItem() {
+        return selectedItem;
+    }
+
+    @Override
+    public int getSize() {
+        return nombres.size();
+    }
+
+    @Override
+    public Object getElementAt(int index) {
+        return nombres.get(index);
+    }
+
+    @Override
+    public void addListDataListener(ListDataListener l) {
+
+    }
+
+    @Override
+    public void removeListDataListener(ListDataListener l) {
+
+    }
+}
+
+
+
+
+
+VentanaDos.java
+package mx.unam.fesa.ico.Ventana2;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+
+public class VentanaDos extends JFrame {
+    private GridLayout layout;
+    private JPanel panel1;
+    private JPanel panel2;
+    private JPanel panel3;
+    private JPanel panel4;
+    private JLabel etiqueta;
+    private JButton boton;
+    private JComboBox<String> combo;
+
+
+    public VentanaDos(){
+        super("Mi segunda ventana swing");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        layout = new GridLayout(2,2);
+        getContentPane().setLayout(layout);
+        panel1 = new JPanel();
+        panel2 = new JPanel();
+        panel3 = new JPanel();
+        panel4 = new JPanel();
+        combo = new JComboBox<>();
+
+        ArrayList<String> nombres = new ArrayList<>();
+        nombres.add("Juan");
+        nombres.add("Pedro");
+        nombres.add("María");
+        nombres.add("Jesus");
+        nombres.add("Ana");
+        ModeloComboNombres modelo = new ModeloComboNombres(nombres);
+        combo.setModel(modelo);
+
+        panel1.setBackground(Color.red);
+        panel2.setBackground(Color.blue);
+        panel3.setBackground(Color.green);
+        panel4.setBackground(Color.yellow);
+
+        etiqueta = new JLabel("Soy un Label");
+        boton = new JButton("Soy un botón");
+        panel1.add(etiqueta);
+        panel2.add(boton);
+        panel3.add(combo);
+
+
+        getContentPane().add(panel1,0);
+        getContentPane().add(panel2,1);
+        getContentPane().add(panel3,2);
+        getContentPane().add(panel4,3);
+
+        setSize(800, 600);
+        setVisible(true);
     }
 
 }
